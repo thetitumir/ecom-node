@@ -11,5 +11,5 @@ router.get('/login', indexController.loginController);
 router.post('/login', Login);
 router.get('/register', indexController.registerController);
 router.post('/register',EmailCheck, indexController.newRegisterController)
-
+router.get("/logout", indexController.logoutController);
 module.exports = router;

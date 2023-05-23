@@ -1,4 +1,5 @@
 const {body,validationResult} = require('express-validator');
+const bcrypt = require('bcrypt');
 const User = require("../models/UserModel");
 const validationRules = [
   body("email").trim().isEmail().withMessage("Please enter your email"),
@@ -14,10 +15,16 @@ async function Login(req,res,next) {
      
       return res.render("frontend/login",{errors:errors.errors});
     }
-    const user = await User.findOne({email:req.body.email,password:req.body.password});
+    const user = await User.findOne({email:req.body.email});
     if (user) {
+      const isValidPassword = bcrypt.compareSync(req.body.password,user.password);
+      if(isValidPassword){
         req.session.user = user;
-       return res.redirect("/");
+        return res.redirect("/");
+      }else{
+        return  res.render("frontend/login",{errors:[{path:"Error",msg:"Email or password invalid"}]});
+      }
+       
         
     }else{
       return  res.render("frontend/login",{errors:[{path:"Error",msg:"Email or password invalid"}]});

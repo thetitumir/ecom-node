@@ -1,5 +1,6 @@
 var User = require("../models/UserModel");
 const {body,validationResult} = require('express-validator');
+const bcrypt = require('bcrypt');
 exports.indexController = (req, res, next) =>{
     const user = req.session.user;
     res.render('frontend/home',{user: user});
@@ -25,19 +26,22 @@ exports.newRegisterController = async (req, res)=>{
 
       return res.render("frontend/register",{errors:errors.errors});
     }else{
+      const password = bcrypt.hashSync(req.body.password,10);
         await User.create({
             name: req.body.name,
             email: req.body.email,
-            password: req.body.password,
+            password: password,
             status: "active"
           }).then(user=>{
             req.session.user = user;
             res.redirect("/")
           }).catch((err)=>res.json(err));
     }
-
-
- 
-
   
+}
+
+exports.logoutController =async (req,res)=>{
+  req.session.destroy(e=>{
+    res.redirect("/login");
+  });
 }
