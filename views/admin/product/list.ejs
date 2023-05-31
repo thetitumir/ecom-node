@@ -1,0 +1,81 @@
+<%- include("../common/header.ejs") -%>
+    <style>
+        .img-thumbnail {
+            position: relative;
+            display: block;
+            width: 10%;
+        }
+    </style>
+    <div class="layout-page">
+        <!-- Content wrapper -->
+        <div class="content-wrapper">
+            <!-- Content -->
+
+            <div class="container-xxl flex-grow-1 container-p-y">
+                <div class="row">
+                    <h2 class="text-center">Product List</h2>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Title</th>
+                                <th scope="col">IMG</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Size</th>
+                                <th scope="col">Quanlity</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% products.map(item=>{ %>
+                                <tr>
+                                    <td>
+                                        <%= item.title %>
+                                    </td>
+                                    <td>
+                                        <img class="img-thumbnail"
+                                            src="<%= env.SITE_URL%>/assets/products/thumb/<%= item.thumb %>" />
+                                    </td>
+                                    <td>
+                                        <%= item.category %>
+                                    </td>
+                                    <td>
+                                        <%= item.price %>
+                                    </td>
+                                    <td>
+                                        <%= item.size %>
+                                    </td>
+                                    <td>
+                                        <%= item.quantity %>
+                                    </td>
+                                    <td>
+                                        <%= item.status %>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                                data-bs-toggle="dropdown">
+                                                <i class="bx bx-dots-vertical-rounded"></i>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href=""><i class="bx bx-edit-alt me-2"></i>
+                                                    Edit</a>
+                                                <a class="dropdown-item"
+                                                    href="<%= env.SITE_URL%>/admin/product/delete/<%= item.id %>"><i
+                                                        class="bx bx-trash me-2"></i> Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <% });%>
+                        </tbody>
+                    </table>
+
+
+
+                </div>
+            </div>
+
+
+            <%- include("../common/footer.ejs") -%>

@@ -25,8 +25,11 @@
                                 <input type="file" name="product_image" class="form-control" multiple />
                                 <lebel for="category">Product Category</lebel>
                                 <select class="form-control w-50" name="category">
-                                    <option value="watch">watch</option>
-                                    <option value="category">category</option>
+                                    <% categories.map(category=> { %>
+                                        <option value="<%= category.slug %>">
+                                            <%= category.title %>
+                                        </option>
+                                        <% }); %>
                                 </select>
                                 <lebel for="price">Product Price</lebel>
                                 <input type="number" name="price" class="form-control" placeholder="Product price">
