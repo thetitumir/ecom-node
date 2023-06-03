@@ -1,10 +1,6 @@
 var User = require("../models/UserModel");
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
-exports.indexController = (req, res, next) => {
-  const user = req.session.user;
-  res.render('frontend/home', { user: user });
-}
 exports.loginController = (req, res) => {
   res.render('frontend/login', { errors: "" });
 }

@@ -18,6 +18,10 @@ const productSchema = new mongoose.Schema({
         type: String,
         default: "user"
     },
+    color: {
+        require: false,
+        type: String
+    },
     description: {
         required: true,
         type: String,
