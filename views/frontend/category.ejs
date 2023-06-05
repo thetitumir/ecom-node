@@ -32,7 +32,7 @@
             <div class="row">
                 <% products.map(product=>{ %>
                     <div class="col-sm-4">
-                        <a href="<%=SITE_URL%>/product/<%= product.id %>">
+                        <a href="<%=SITE_URL%>/product/<%= product?._id %>">
                             <div class="thumbnail">
 
                                 <img src="<%=SITE_URL%>/assets/products/thumb/<%=product.thumb%>" class="img-responsive"

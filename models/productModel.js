@@ -14,7 +14,7 @@ const productSchema = new mongoose.Schema({
         type: Number
     },
     size: {
-        required: true,
+        required: false,
         type: String,
         default: "user"
     },

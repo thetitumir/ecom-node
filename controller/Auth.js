@@ -1,4 +1,6 @@
 var User = require("../models/UserModel");
+var categoryModel = require("../models/CategoryModel");
+var product = require("../models/productModel");
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 exports.loginController = (req, res) => {
@@ -45,3 +47,16 @@ exports.logoutController = async (req, res) => {
 exports.productDetailController = async (req, res) => {
   res.render("frontend/details", { errors: "" });
 };
+exports.categoryDetailController = async (req, res) => {
+  let page = 1;
+  let perpage = 3;
+  if (req.query.page !== undefined && req.query.page > 1) {
+    page = parseInt(req.query.page);
+  }
+  let skip = (page - 1) * perpage;
+  const slug = req.params.slug;
+  const categoryList = await categoryModel.find();
+  const productList = await product.aggregate([{ $lookup: { from: "categories", localField: "category", foreignField: "slug", as: "category" } }, { $match: { "category.slug": slug } }, { $skip: skip }, { $limit: perpage }]);
+  console.log(productList[0]._id);
+  res.render("frontend/category", { errors: "", products: productList, SITE_URL: process.env.SITE_URL, category: categoryList, page: page });
+}

@@ -10,6 +10,7 @@ var router = express.Router();
 router.get('/', Auth, HomeController.HomeController);
 router.get("/product/:productId", HomeController.ProductController);
 router.get('/product', indexController.productDetailController);
+router.get('/category/:slug', indexController.categoryDetailController);
 router.get('/login', indexController.loginController);
 router.post('/login', Login);
 router.get('/register', indexController.registerController);
