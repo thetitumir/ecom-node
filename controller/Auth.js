@@ -60,3 +60,6 @@ exports.categoryDetailController = async (req, res) => {
   console.log(productList[0]._id);
   res.render("frontend/category", { errors: "", products: productList, SITE_URL: process.env.SITE_URL, category: categoryList, page: page });
 }
+exports.cart = async (req, res) => {
+  res.render("frontend/cart", { errors: "", SITE_URL: process.env.SITE_URL })
+}

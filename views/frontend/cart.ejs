@@ -1,0 +1,77 @@
+<%- include("common/header.ejs") -%>
+    <div class="menu container-fluid" style="position:relative;top:4em; padding-bottom:5px;">
+        <div class="container-fluid">
+            <div class="row">
+                <div id="cartList">
+                    <div class="col-sm-12 col-md-10 col-md-offset-1">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+
+                                    <th>Quantity</th>
+                                    <th class="text-center">Price</th>
+                                    <th class="text-center">Total</th>
+                                    <th> </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script>
+        const cartList = document.getElementById("cartList");
+        const tbody = document.querySelector("tbody");
+        let total_products = localStorage.getItem('userCart');
+        total_products = JSON.parse(total_products);
+        console.log(total_products)
+        total_products.map(item => {
+            let trcontent = `
+            <tr>
+<td class="col-sm-8 col-md-6">
+                                        <div class="media">
+                                            <a class="thumbnail pull-left" href="#"> <img class="media-object"
+                                                    src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png"
+                                                    style="width: 72px; height: 72px;"> </a>
+                                            <div class="media-body">
+                                                <h4 class="media-heading"><a href="#">${item.name}</a></h4>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td class="col-sm-1 col-md-1" style="text-align: center">
+                                        <input type="email" class="form-control" id="exampleInputEmail1" value="${parseInt(item.quantity)}">
+                                    </td>
+                                    <td class="col-sm-1 col-md-1 text-center"><strong>${parseInt(item.price)}</strong></td>
+                                    <td class="col-sm-1 col-md-1 text-center"><strong>${parseInt(item.price) * parseInt(item.quantity)}</strong></td>
+                                    <td class="col-sm-1 col-md-1">
+                                        <button type="button" onClick="delete_item(event,'${item.product_id}')" class="btn btn-danger">
+                                            <span class="fa fa-remove"></span> Remove
+                                        </button>
+                                    </td>
+                                </tr>
+            `;
+
+            tbody.innerHTML += trcontent
+        });
+        function delete_item(event, id) {
+            var tr = event.target.closest('tr');
+            if (tr) {
+                id = id.trim();
+                let updated_items = total_products.filter(item => item.product_id !== id);
+                localStorage.removeItem('userCart');
+                localStorage.setItem('userCart', JSON.stringify(updated_items));
+                // Remove the <tr> element from its parent
+                tr.parentNode.removeChild(tr);
+            }
+        }
+    </script>
+    <%- include("common/footer.ejs") -%>

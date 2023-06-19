@@ -353,7 +353,7 @@
                 <div class="col-md-6">
                     <div class="product-dtl">
                         <div class="product-info">
-                            <div class="product-name">
+                            <div class="product-name" id="product_title">
                                 <%= product.title %>
                             </div>
                             <div class="reviews-counter">
@@ -371,7 +371,9 @@
                             </div> -->
                                 <!-- <span>3 Reviews</span> -->
                             </div>
-                            <div class="product-price-discount"><span>$<%= product.price %></span>
+                            <div class="product-price-discount">$<span id="product_price">
+                                    <%= product.price %>
+                                </span>
                             </div>
                         </div>
                         <div class="row">
@@ -388,11 +390,13 @@
                             <label for="size">Quantity</label>
                             <form action="#" class="display-flex">
                                 <div class="qtyminus">-</div>
-                                <input type="text" name="quantity" max="<%= product.quantity %>" value="1" class="qty">
+                                <input type="text" name="quantity" max="<%= product.quantity %>" value="1" class="qty"
+                                    id="quantity">
+                                <input type="hidden" value="<%= product.id %>" id="product_id">
                                 <div class="qtyplus">+</div>
                             </form>
                             <a href="#" class="round-black-btn">Buy Now</a>
-                            <a href="#" class="round-black-btn">Add to Cart</a>
+                            <a href="#" class="round-black-btn" id="cartBtn">Add to Cart</a>
                         </div>
                     </div>
                 </div>
