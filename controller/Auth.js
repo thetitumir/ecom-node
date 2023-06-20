@@ -1,6 +1,7 @@
 var User = require("../models/UserModel");
 var categoryModel = require("../models/CategoryModel");
 var product = require("../models/productModel");
+var Orders = require("../models/OrderModel");
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 exports.loginController = (req, res) => {
@@ -62,4 +63,27 @@ exports.categoryDetailController = async (req, res) => {
 }
 exports.cart = async (req, res) => {
   res.render("frontend/cart", { errors: "", SITE_URL: process.env.SITE_URL })
+}
+exports.addressDetailController = async (req, res) => {
+  res.render("frontend/address", { errors: "", SITE_URL: process.env.SITE_URL })
+}
+exports.productOrderController = async (req, res) => {
+  const { fullname, address, products, zip, payment_type } = req.body;
+  const addressObj = {
+    fullname: fullname,
+    address: address,
+    zip: zip,
+    payment_type: payment_type
+  };
+  const productObj = JSON.parse(products);
+  const { _id, name, email } = req.session.user;
+  console.log(productObj);
+  await Orders.create({
+    uid: _id,
+    name: name,
+    email: email,
+    address: addressObj,
+    products: productObj
+  }).then(() => console.log("Order created"));
+  res.render("frontend/track", { errors: "", SITE_URL: process.env.SITE_URL })
 }

@@ -11,6 +11,8 @@ router.get('/', Auth, HomeController.HomeController);
 router.get("/product/:productId", HomeController.ProductController);
 router.get('/product', indexController.productDetailController);
 router.get('/cart', indexController.cart);
+router.get('/cart/address', indexController.addressDetailController);
+router.post('/order', indexController.productOrderController);
 router.get('/category/:slug', indexController.categoryDetailController);
 router.get('/login', indexController.loginController);
 router.post('/login', Login);
