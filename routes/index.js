@@ -8,12 +8,13 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', Auth, HomeController.HomeController);
-router.get("/product/:productId", HomeController.ProductController);
-router.get('/product', indexController.productDetailController);
-router.get('/cart', indexController.cart);
-router.get('/cart/address', indexController.addressDetailController);
-router.post('/order', indexController.productOrderController);
-router.get('/category/:slug', indexController.categoryDetailController);
+router.get("/product/:productId",Auth, HomeController.ProductController);
+router.get('/product', Auth,indexController.productDetailController);
+router.get('/cart',Auth, indexController.cart);
+router.get('/cart/address', Auth,indexController.addressDetailController);
+router.post('/order',Auth, indexController.productOrderController);
+router.get('/order', Auth,indexController.productTrackOrderController);
+router.get('/category/:slug',Auth, indexController.categoryDetailController);
 router.get('/login', indexController.loginController);
 router.post('/login', Login);
 router.get('/register', indexController.registerController);

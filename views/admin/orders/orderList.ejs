@@ -1,0 +1,194 @@
+<%- include("../common/header.ejs") -%>
+<div class="layout-page">
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+
+
+                <div class="table-responsive">
+                    <table class="table">
+                    <caption>List of users</caption>
+                    <thead>
+                      <tr>
+                        
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Products</th>
+                        <th scope="col">Addrress</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <% orders.map(function(item){ %>
+                      <tr>
+                    
+                        <td><%= item.name %></td>
+                        <td><%= item.email %></td>
+                        <td><%= item.status %></td>
+                        <td>
+                            <script>
+
+                            </script>
+                            <button type="button" onclick="addToModal('<%= JSON.stringify(item.products) %>')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">
+                            Products
+                          </button></td>                        
+                          
+                          <td><button type="button" onclick="addToModal('<%= JSON.stringify(item.address) %>')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">
+                            Address
+                          </button></td>
+                          <td>
+                            <div class="dropdown">
+                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="updateStatus/<%= item.id %>/active"><i class="bx bx-edit-alt me-2"></i>
+                                        Accept</a>
+                                        <a class="dropdown-item" href="updateStatus/<%= item.id %>/delivered"><i class="bx bx-edit-alt me-2"></i>
+                                          Delivered</a>
+                                    <a class="dropdown-item" href="updateStatus/<%= item.id %>/reject"><i class="bx bx-trash me-2"></i> Reject</a>
+                                </div>
+                            </div>
+                          </td>
+
+                      </tr>
+                      <% }) %>
+     
+                    </tbody>
+                  </table>
+                  </div>
+
+                  <div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true" style="display: none;">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel1">Info Modal</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <div class="row">
+                            <div class="col mb-10">
+                              <label for="nameBasic" class="form-label">Info</label>
+                              <p id="modalData">
+                                <div id="tableContainer"></div>
+                              </p>
+                            </div>
+                          </div>
+     
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                            Close
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+        </div>
+    </div>
+</div>
+        </div>
+        <%- include("../common/footer.ejs") -%>
+        </div>
+
+<script>
+    function addToModal(data = null){
+        const modalData = document.getElementById("modalData");
+// Parse the data
+const parsedData = JSON.parse(data);
+
+// Get the table element
+const tableContainer = document.getElementById("tableContainer"); // Replace 'table-container' with the ID of your table container element
+
+// Create a new table element
+const table = document.createElement('table');
+table.className = 'table';
+
+// Create the table header (thead)
+const thead = document.createElement('thead');
+const headerRow = document.createElement('tr');
+
+// Create the table body (tbody)
+const tbody = document.createElement('tbody');
+
+// Define keys to exclude from the table
+const keysToExclude = ['product_id', 'thumb_url'];
+if (Array.isArray(parsedData) && parsedData.every(item => typeof item === 'object')) {
+// Create the table header columns
+for (const key in parsedData[0]) {
+  if (!keysToExclude.includes(key)) { // Check if the key should be excluded
+    const th = document.createElement('th');
+    th.textContent = key;
+    headerRow.appendChild(th);
+  }
+}
+}else{
+    // Create the table header columns
+for (const key in parsedData) {
+  if (!keysToExclude.includes(key)) { // Check if the key should be excluded
+    const th = document.createElement('th');
+    th.textContent = key;
+    headerRow.appendChild(th);
+  }
+}
+}
+// Append the header row to the thead
+thead.appendChild(headerRow);
+
+// Append the thead to the table
+table.appendChild(thead);
+
+// Check if parsedData is an array and contains objects
+if (Array.isArray(parsedData) && parsedData.every(item => typeof item === 'object')) {
+  // Create and populate the table rows and cells (tdData)
+  parsedData.forEach((rowData, index) => {
+    const row = document.createElement('tr');
+
+    // Loop through the keys in rowData and create table cells (td)
+    for (const key in rowData) {
+      if (!keysToExclude.includes(key)) { // Check if the key should be excluded
+        const cell = document.createElement('td');
+        cell.textContent = rowData[key];
+        row.appendChild(cell);
+      }
+    }
+
+    tbody.appendChild(row);
+  });
+} else {
+  // Handle the case when parsedData is not an array of objects
+  const row = document.createElement('tr');
+
+  // Loop through the keys in a sample object (assuming all objects have the same keys)
+  for (const key in parsedData) {
+    if (!keysToExclude.includes(key)) { // Check if the key should be excluded
+      const cell = document.createElement('td');
+      cell.textContent = parsedData[key];
+      row.appendChild(cell);
+    }
+  }
+
+  tbody.appendChild(row);
+}
+
+
+
+
+
+
+// Append the tbody to the table
+table.appendChild(tbody);
+
+// Append the table to the table container in your HTML
+tableContainer.appendChild(table);
+
+// Add the table to the modal data
+modalData.innerHTML = ''; // Clear existing content in modalData
+modalData.appendChild(table); // Append the table to modalData
+    }
+</script>

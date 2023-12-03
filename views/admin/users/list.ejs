@@ -1,0 +1,53 @@
+<%- include("../common/header.ejs") -%>
+<div class="layout-page">
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <% users.map(function(user){ %>
+                  <tr>
+                    <th><%= user?.name  %></th>
+                    <td><%= user?.email  %></td>
+                    <td><%= user?.role  %></td>
+                    <td><%= user?.status  %></td>
+                    <td>
+                        <div class="dropdown">
+                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bx bx-dots-vertical-rounded"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="updateUserStatus/<%= user.id %>/block"><i class="bx bx-edit-alt me-2"></i>
+                                    Block</a>
+                                    <a class="dropdown-item" href="updateUserStatus/<%= user.id %>/active"><i class="bx bx-edit-alt me-2"></i>
+                                      Active</a>
+                                <a class="dropdown-item" href="updateUserStatus/<%= user.id %>/delete"><i class="bx bx-trash me-2"></i> Delete</a>
+                            </div>
+                        </div>
+                    </td>
+                  </tr>
+                  <% }) %>    
+                </tbody>
+              </table>
+            
+       
+
+          
+            </div>
+            </div>
+            </div>
+            </div>
+            <%- include("../common/footer.ejs") -%>
+            </div>

@@ -44,9 +44,12 @@
                                 style="
     background: red;
 " id="cartCounter"></span></a></li>
-                    <li><a href=""><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
-                    <li><a href=""><span class="glyphicon glyphicon-log-out"></span>
-                            Name
+                    <li><a href="<%= SITE_URL %>/order"><span class="glyphicon glyphicon-cog"></span> Track</a></li>
+                    <li><a href="">
+                            <%= user.name %>
+                        </a></li>
+                         <li><a href="/logout">
+                            Logout
                         </a></li>
                 </ul>
             </div>

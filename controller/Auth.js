@@ -59,13 +59,15 @@ exports.categoryDetailController = async (req, res) => {
   const categoryList = await categoryModel.find();
   const productList = await product.aggregate([{ $lookup: { from: "categories", localField: "category", foreignField: "slug", as: "category" } }, { $match: { "category.slug": slug } }, { $skip: skip }, { $limit: perpage }]);
   console.log(productList[0]._id);
-  res.render("frontend/category", { errors: "", products: productList, SITE_URL: process.env.SITE_URL, category: categoryList, page: page });
+  res.render("frontend/category", {  user: user,errors: "", products: productList, SITE_URL: process.env.SITE_URL, category: categoryList, page: page });
 }
 exports.cart = async (req, res) => {
-  res.render("frontend/cart", { errors: "", SITE_URL: process.env.SITE_URL })
+  const user = req.session.user;
+  res.render("frontend/cart", {  user: user,errors: "", SITE_URL: process.env.SITE_URL })
 }
 exports.addressDetailController = async (req, res) => {
-  res.render("frontend/address", { errors: "", SITE_URL: process.env.SITE_URL })
+  const user = req.session.user;
+  res.render("frontend/address", { user: user, errors: "", SITE_URL: process.env.SITE_URL })
 }
 exports.productOrderController = async (req, res) => {
   const { fullname, address, products, zip, payment_type } = req.body;
@@ -85,5 +87,10 @@ exports.productOrderController = async (req, res) => {
     address: addressObj,
     products: productObj
   }).then(() => console.log("Order created"));
-  res.render("frontend/track", { errors: "", SITE_URL: process.env.SITE_URL })
+  res.redirect("/order");
+}
+exports.productTrackOrderController = async (req, res, next) => {
+  const user = req.session.user;
+  const orders = await Orders.find({ uid: req.session.user._id, status: { $ne: "delivered" } });
+  res.render("frontend/track", {  user: user,errors: "", SITE_URL: process.env.SITE_URL, orders: orders });
 }

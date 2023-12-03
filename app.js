@@ -9,9 +9,6 @@ require('dotenv').config()
 var adminRouter = require('./routes/admin');
 var usersRouter = require('./routes/users');
 var indexRouter = require('./routes/index');
-
-mongoose.connect("mongodb://localhost:27017/ecomdb").then(function(){console.log("Connected to mongodb server")});
-
 var app = express();
 // view engine setup
 app.locals.env = process.env;
@@ -22,6 +19,7 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }))
+mongoose.connect(process.env.DB_URL).then(function(){console.log("Connected to mongodb server")});
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

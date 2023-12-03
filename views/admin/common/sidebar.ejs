@@ -60,7 +60,7 @@
     <ul class="menu-inner py-1">
         <!-- Dashboard -->
         <li class="menu-item active">
-            <a href="/admin" class="menu-link">
+            <a href="<%= env.SITE_URL %>/admin" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
             </a>
@@ -77,18 +77,13 @@
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="admin/product/add" class="menu-link">
+                    <a href="<%= env.SITE_URL %>/admin/product/add" class="menu-link">
                         <div data-i18n="Account">Add</div>
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="admin/product/list" class="menu-link">
+                    <a href="<%= env.SITE_URL %>/admin/product/list" class="menu-link">
                         <div data-i18n="Notifications">List</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="product/pending" class="menu-link">
-                        <div data-i18n="Connections">Pending</div>
                     </a>
                 </li>
             </ul>
@@ -100,8 +95,18 @@
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="auth-login-basic.html" class="menu-link" target="_blank">
+                    <a href="<%= env.SITE_URL %>/admin/order/list" class="menu-link">
                         <div data-i18n="Basic">List</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="<%= env.SITE_URL %>/admin/order/active" class="menu-link">
+                        <div data-i18n="Basic">Active</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="<%= env.SITE_URL %>/admin/order/delivered" class="menu-link">
+                        <div data-i18n="Basic">Delivered</div>
                     </a>
                 </li>
             </ul>
@@ -113,12 +118,12 @@
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="/admin/category/add" class="menu-link">
+                    <a href="<%= env.SITE_URL %>/admin/category/add" class="menu-link">
                         <div data-i18n="Basic">Add</div>
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="/admin/category/list" class="menu-link">
+                    <a href="<%= env.SITE_URL %>/admin/category/list" class="menu-link">
                         <div data-i18n="Basic">List</div>
                     </a>
                 </li>
@@ -131,14 +136,10 @@
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="pages-misc-error.html" class="menu-link">
-                        <div data-i18n="Error">Add user</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="pages-misc-under-maintenance.html" class="menu-link">
+                    <a href="<%= env.SITE_URL %>/admin/users/list" class="menu-link">
                         <div data-i18n="Under Maintenance">Users List</div>
                     </a>
+                    
                 </li>
             </ul>
         </li>
