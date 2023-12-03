@@ -63,6 +63,56 @@
 
 </footer>
 <script src="<%= SITE_URL %>/assets/js/app.js"></script>
+<script>
+    const cartBtn = document.getElementById("cartBtn");
+const cartKey = "userCart"
+
+function addNewProduct() {
+    const productId = document.getElementById("product_id");
+    const quantity = document.getElementById("quantity");
+    const thumbUrl = document.querySelector(".item img").src;
+    const name = document.getElementById("product_title").innerText;
+    const price = document.getElementById("product_price").innerText;
+    let updatedProduct = [];
+    let prevProduct = localStorage.getItem(cartKey);
+    let product = {
+        "product_id": productId.value,
+        "name": name,
+        "price": price,
+        "thumb_url": thumbUrl,
+        "quantity": quantity.value
+    };
+    if (prevProduct) {
+        prevProduct = JSON.parse(prevProduct);
+        if (Array.isArray(prevProduct)) {
+            prevProduct.push(product);
+            updatedProduct = prevProduct;
+        } else {
+            updatedProduct.push(prevProduct);
+            updatedProduct.push(product);
+        }
+        localStorage.setItem(cartKey, JSON.stringify(updatedProduct));
+    } else {
+        localStorage.setItem(cartKey, JSON.stringify(product));
+    }
+
+}
+function cartCounter() {
+    let list = localStorage.getItem(cartKey); // Retrieve the value from localStorage
+    if (typeof list !== "undefined" && list !== null) { // Check if the value is not undefined and not null
+        let counter = JSON.parse(list).length; // Parse the retrieved value
+        if (counter > 0) {
+            const counterEl = document.getElementById("cartCounter");
+            counterEl.innerText = counter;
+        }
+    }
+}
+cartCounter();
+cartBtn.onclick = e => {
+    addNewProduct()
+    cartCounter()
+}
+</script>
 </body>
 
 </html>
